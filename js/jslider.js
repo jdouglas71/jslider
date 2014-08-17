@@ -10,11 +10,11 @@ $(document).ready(function() {
 	
 	updateZIndex();
 
-	if( $.support.transform)
+	if( $.support.transform )
 	{
 		//Modern browsers with support for css3 transformations
 
-		li.find('img').css('rotate', function(i){
+		li.find('img').css('rotate', function(i) {
 			//Rotating the images counter-clockwise.
 			return (-90*i) + 'deg';
 		});
@@ -22,24 +22,27 @@ $(document).ready(function() {
 		//Binding a custom event. The direction and degrees parameters
 		//are passed when the event is triggered later on in the code.
 		slideShow.bind('rotateContainer', function(e,direction,degrees) {
+
 			//Zooming in the slideshow
 			slideShow.animate({
 				width: 510,
 				height: 510,
 				marginTop: 0,
 				marginLeft: 0
-			},'fast',function(){
+			},'fast',function() {
 				 if( direction == 'next' )
 				 {
 					 //Moving the topmost image containing li at
 					 //the bottom after a fadeOut animation
 					 $('li:first').fadeOut('slow', function() {
+						 $(this).children('img').hide();
 						 $(this).remove().appendTo(ul).show();
 						 updateZIndex();
 					 });
 				 }
 				 else
 				 {
+					 $('li:first').children('img').hide();
 					 //Showing the bottom most li element on top with a fade in animation.
 					 //Note that we are updating the z indices.
 					 var liLast = $('li:last').hide().remove().prependTo(ul);
@@ -64,7 +67,7 @@ $(document).ready(function() {
 			slideShow.trigger('rotateContainer',['next',90]);
 		});
 
-		slideShow.bind('showPrevious',function(){
+		slideShow.bind('showPrevious',function() {
 			slideShow.trigger('rotateContainer',['previous',-90]);
 		});
 	}
@@ -72,13 +75,15 @@ $(document).ready(function() {
 	{
 		//Fallback for IE and older browsers
 		slideShow.bind('showNext',function(){
-			$('li:first').fadeOut('slow',function(){
+			$('li:first').children('img').hide();
+			$('li:first').fadeOut('slow',function() {
 				$(this).remove().appendTo(ul).show();
 				updateZIndex();
 			});
 		});
 
 		slideShow.bind('showPrevious',function() {
+			$('li:first').children('img').hide();
 			var liLast = $('li:last').hide().remove().prependTo(ul);
 			updateZIndex();
 			liLast.fadeIn('slow');
@@ -115,5 +120,7 @@ $(document).ready(function() {
 		ul.find('li').css('z-index',function(i) {
 			return cnt-i;
 		});
+
+		$('li:first').children('img').css('display','block');
 	}
 });

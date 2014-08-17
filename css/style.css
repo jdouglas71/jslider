@@ -72,6 +72,9 @@ body
 {
    	border-radius: 15px;
 	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: none;
 }
 
 #previousLink
