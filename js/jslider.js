@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	var interval = 5000;
+
 	var slideShow = $('#slideShow'),
 		ul = slideShow.find('ul'),
 		li = ul.find('li'),
@@ -89,6 +91,11 @@ $(document).ready(function() {
 			liLast.fadeIn('slow');
 		});
 	}
+
+	//setup the timeout to cycle thru the images.
+	setInterval( function() {
+		slideShow.trigger('showNext');
+	}, interval );
 
 	//Listening for clicks on the arrows, and
 	//triggering the appropriate event.
